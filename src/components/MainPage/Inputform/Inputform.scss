@@ -1,0 +1,95 @@
+.inputform {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: flex;
+    transform: scale(0);
+    transition-delay: 0.1s;
+    &-on {
+        transform: scale(1);
+        transition-delay: 0s;
+
+        .inputform__overlay {
+            opacity: 1;
+        }
+
+        .inputform__body {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    &__overlay {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        background-color: rgba(0, 0, 0, 0.418);
+        opacity: 1;
+        transition: all 0.1s linear;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        position: relative;
+        margin: auto;
+        margin-top: 100px;
+
+        background-color: rgb(190, 164, 192);
+        width: 300px;
+        border-radius: 6px;
+
+        opacity: 0;
+        transform: scale(0.6);
+        transition: all 0.1s linear;
+    }
+
+    &__header {
+        color: black;
+        font-size: 1.8rem;
+        margin: 14px 0;
+    }
+
+    &__label {
+        font-size: 1.4rem;
+    }
+
+    &__input {
+        height: 36px;
+        width: 150px;
+
+        border-radius: 6px;
+        border: 1px solid black;
+
+        font-size: 1.6rem;
+    }
+
+    &__btn {
+        height: 34px;
+        width: 100px;
+        margin: 14px 0;
+        border-radius: 6px;
+        border: 2px solid rgb(255, 255, 255);
+
+        font-size: 1.4rem;
+        background-color: rgba(255, 102, 0, 0.897);
+    }
+}
+
+.input {
+    width: 88%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+

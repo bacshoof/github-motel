@@ -1,0 +1,60 @@
+.info-card {
+    position: relative;
+    margin-top: 10px;
+    padding: 5px;
+    
+    border: 2px solid rgba(255, 255, 255, 0.842);
+    border-radius: 5px;
+    
+    background-color: rgb(255, 97, 242);
+    display: flex;
+    overflow: hidden;
+    justify-content: space-between;
+    align-items: center;
+
+    z-index: 2;
+    &::after {
+        content: '';
+        position: absolute;
+        top: -10px;
+
+        border-color: transparent rgb(255, 97, 242) transparent transparent;
+        border-style: solid;
+        border-width: 60px 16px 0 50px;
+        z-index: 2;
+    }
+    
+    &__img {
+        position: absolute;
+        left: -10px;
+        top: -2px;
+        z-index: 2;
+
+        width: 80px;
+        object-fit: contain;
+    }
+
+    &__name {
+        font-size: 1.65rem;
+        color: white;
+    }
+
+    &__scores {
+        background-color: rgba(250, 128, 114, 0.575);
+        text-align: start;
+        width: 36px;
+
+        &-number {
+            color: red;
+        }
+    }
+
+    &__contribute {
+        margin-right: 8px;
+        font-size: 1.2rem;
+    }
+}
+
+.no-flex {
+    margin-left: 80px;
+}
