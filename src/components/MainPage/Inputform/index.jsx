@@ -1,74 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import './Inputform.scss';
-import api from '../../../api';
-import { useDispatch, useSelector } from 'react-redux';
-import { getActionRequest } from '../../actionSlice';
-import { getMemberRequest } from '../../memberSlice';
-import { getCookingRequest } from '../../cookingSlice';
 
 function Inputform(props) {
     const {
         title,
         displayInput,
         handledisplayInput,
+        handleSubmitCooking,
+        handleSubmitOther,
+        resetItem,
+        handleonChange,
     } = props
-
-    const master = useSelector(state => state.master)
-    const dispatch = useDispatch();
-
-
-    const [objApi, setObjApi] = useState({});
-
-    useEffect(() => {
-        setObjApi({
-            ...objApi,
-            username: master.name,
-            type: title,
-            member: [master.name],
-        })
-    }, [master,title])
-
-    const handleonChangename = (e) => {
-        setObjApi({
-            ...objApi,
-            item: e.target.value
-        })
-    }
-
-    const handleonChangeprice = (e) => {
-        setObjApi({
-            ...objApi,
-            price: e.target.value
-        })
-    }
-
-    const resetItem = () => {
-        setObjApi({
-            ...objApi,
-            item: undefined
-        })
-    }
-
-    console.log(objApi)
-
-    const handleSubmitCooking = async (e) => {
-        e.preventDefault();
-        await api.fetchCreateCooking(objApi);
-        dispatch(getCookingRequest());
-        handledisplayInput();
-    }
-
-    const handleSubmitOther = async (e) => {
-        e.preventDefault();
-        const price = parseInt(objApi.price);
-        const newContribute = price
-        await api.fetchCreateAction(objApi)
-        await api.fetchUpdateMember(newContribute)
-        dispatch(getActionRequest())
-        dispatch(getMemberRequest())
-        handledisplayInput()
-    }
 
     return (
         <div className={`inputform ${displayInput? 'inputform-on' : ''}`}>
@@ -97,7 +40,7 @@ function Inputform(props) {
                             type="text" 
                             className="inputform__input" 
                             id='name'
-                            onChange={handleonChangename}
+                            onChange={handleonChange}
                         />
                     </div>
 
@@ -109,7 +52,7 @@ function Inputform(props) {
                             type="number" 
                             className="inputform__input" 
                             id='price' 
-                            onChange={handleonChangeprice}
+                            onChange={handleonChange}
                         />
                     </div>
                     </>

@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Card from './Card'
 import Notify from './Notify'
 import Inputform from './Inputform'
+import api from '../../api'
 import './MainPage.scss'
-import { useState } from 'react'
+import { getCookingRequest } from '../cookingSlice'
+import { getActionRequest } from '../actionSlice'
+import { getMemberRequest } from '../memberSlice'
 
 function MainPage() {
     const ListCard = [
@@ -40,6 +45,55 @@ function MainPage() {
         setdisplayInput(!displayInput)
     }
 
+    //handle Submit
+
+    const master = useSelector(state => state.master)
+    const dispatch = useDispatch();
+
+
+    const [objApi, setObjApi] = useState({});
+
+    useEffect(() => {
+        setObjApi({
+            ...objApi,
+            username: master.name,
+            type: title,
+            member: [master.name],
+        })
+    }, [master,title])
+
+    const handleonChange = (e) => {
+        setObjApi({
+            ...objApi,
+            [e.target.id]: e.target.value
+        })
+        console.log(objApi)
+    }
+
+    const resetItem = () => {
+        setObjApi({
+            ...objApi,
+            item: undefined
+        })
+    }
+    
+    const handleSubmitCooking = async (e) => {
+        e.preventDefault();
+        await api.fetchCreateCooking(objApi);
+        dispatch(getCookingRequest());
+        handledisplayInput();
+    }
+    const handleSubmitOther = async (e) => {
+        e.preventDefault();
+        const price = parseInt(objApi.price);
+        const newContribute = price
+        await api.fetchCreateAction(objApi)
+        await api.fetchUpdateMember(newContribute)
+        dispatch(getActionRequest())
+        dispatch(getMemberRequest())
+        handledisplayInput()
+    }
+
     return (
         <div className='mainpage'>
             <Notify/>
@@ -60,6 +114,10 @@ function MainPage() {
                 title={title} 
                 displayInput={displayInput}
                 handledisplayInput={handledisplayInput}
+                handleSubmitCooking={handleSubmitCooking}
+                handleSubmitOther={handleSubmitOther}
+                resetItem={resetItem}
+                handleonChange={handleonChange}
             />
         </div>
     )
